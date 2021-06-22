@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" name="viewport">
+  <title>登录页面</title>
+
+  <div th:replace="admin/common::menu"></div>
+</head>
+
+<body class="m-body">
+  <div id="app">
+    <section class="section">
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+            <div class="login-brand">
+              Welcome
+            </div>
+
+            <div class="card card-primary">
+              <div class="card-header"><h4>Login</h4></div>
+              <label style="color: red;text-align: center" >[[${msg}]]</label>
+              <div class="card-body">
+                <form method="post" th:action="@{/login}" class="needs-validation" novalidate="">
+                  <div class="form-group">
+                    <label for="username">用户名</label>
+                    <input id="username" type="text" class="form-control" name="username" tabindex="1" required autofocus>
+                    <div class="invalid-feedback">
+                      请输入你的账号
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="password" class="d-block">密码
+                      <div class="float-right">
+                        <a href="forgot.html">
+                          Forgot Password?
+                        </a>
+                      </div>
+                    </label>
+                    <input id="password" type="password" class="form-control" name="password" tabindex="2" required>
+                    <div class="invalid-feedback">
+                      请输入你的密码
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" name="remember" class="custom-control-input" tabindex="3" id="remember-me">
+                      <label class="custom-control-label" for="remember-me">记住我</label>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block" tabindex="4">
+                      Login
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div th:replace="admin/common::srciptmenu"></div>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>公共页面</title>
+    <div th:fragment="menu">
+        <link rel="stylesheet" th:href="@{/modules/bootstrap/css/bootstrap.min.css}">
+        <link rel="stylesheet" th:href="@{/modules/ionicons/css/ionicons.min.css}">
+        <link rel="stylesheet" th:href="@{/modules/fontawesome/web-fonts-with-css/css/fontawesome-all.min.css}">
+        <link rel="stylesheet" th:href="@{/css/demo.css}">
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+        <link rel="stylesheet" th:href="@{/css/me.css}">
+    </div>
+</head>
+<body>
+
+    <nav th:fragment="headermenu" class="navbar navbar-expand-lg main-navbar">
+        <div class="m-right">
+            <ul class="navbar-nav navbar-right">
+            <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg">
+                <i class="mini user icon"></i>
+                <div class="d-sm-none d-lg-inline-block">Hi,[[${session.user.nickname}]]</div></a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a th:href="@{/}" class="dropdown-item has-icon" target="_blank">
+                        <i class="ion ion-log-out"></i>网站
+                    </a>
+                    <a th:href="@{/logout}" class="dropdown-item has-icon">
+                        <i class="ion ion-log-out"></i> Logout
+                    </a>
+                </div>
+            </li>
+        </ul>
+        </div>
+    </nav>
+
+    <div th:fragment="leftmenu(n)" class="main-sidebar" style="z-index: 1 !important;">
+        <aside id="sidebar-wrapper">
+            <div class="sidebar-brand">
+                <i class="ion ion-android-huge-home"></i><span style="font-size: 30px">后 台 管 理</span>
+            </div>
+            <div class="sidebar-user">
+                <div class="sidebar-user-details">
+                    <img class="ui centered circular image" width="120px" th:src="${session.user.avatar}">
+                    <div class="user-name" style="text-align: center"><a th:href="@{/admin/set}">[[${session.user.nickname}]]</a></div>
+                    <div class="user-role" style="text-align: center">
+                        Administrator
+                    </div>
+                </div>
+            </div>
+            <ul class="sidebar-menu">
+                <li th:classappend="${n==1} ? 'active'">
+                    <a th:href="@{/admin/main}"><i class="ion ion-speedometer"></i><span style="font-weight: bold;font-size: 15px">控制台</span></a>
+                </li>
+                <li th:classappend="${n==2 or n==3 or n==4} ? 'active'">
+                    <a href="#" class="has-dropdown"><i class="ion ion-ios-albums-outline"></i><span style="font-weight: bold;font-size: 15px">内容管理</span></a>
+                    <ul class="menu-dropdown">
+                        <li th:classappend="${n==2} ? 'active'"><a th:href="@{/admin/essay}"><i class="ion ion-ios-circle-outline"></i><span style="font-size: 14px">文章管理</span></a></li>
+                        <li th:classappend="${n==3} ? 'active'"><a th:href="@{/admin/classify}"><i class="ion ion-ios-circle-outline"></i><span style="font-size: 14px">分类管理</span></a></li>
+                        <li th:classappend="${n==4} ? 'active'"><a th:href="@{/admin/comment}"><i class="ion ion-ios-circle-outline"></i><span style="font-size: 14px">评论</span></a></li>
+                    </ul>
+                </li>
+                <li th:classappend="${n==5} ? 'active'">
+                    <a th:href="@{/admin/write}"><i class="ion ion-clipboard"></i><span style="font-weight: bold;font-size: 15px">撰写文章</span></a>
+                </li>
+                <li th:classappend="${n==6} ? 'active'">
+                    <a th:href="@{/admin/set}"><i class="ion ion-stats-bars"></i><span style="font-weight: bold;font-size: 15px">个人设置</span></a>
+                </li>
+            </ul>
+        </aside>
+    </div>
+
+    <div th:fragment="srciptmenu">
+        <script th:src="@{/modules/jquery.min.js}"></script>
+        <script th:src="@{/modules/bootstrap/js/bootstrap.min.js}"></script>
+        <script th:src="@{/modules/nicescroll/jquery.nicescroll.min.js}"></script>
+        <script th:src="@{/modules/scroll-up-bar/dist/scroll-up-bar.min.js}"></script>
+        <script th:src="@{/js/sa-functions.js}"></script>
+        <script th:src="@{/js/scripts.js}"></script>
+        <script th:src="@{/js/custom.js}"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    </div>
+</body>
+</html>

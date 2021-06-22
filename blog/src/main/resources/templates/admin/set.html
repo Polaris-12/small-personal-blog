@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>个人设置</title>
+    <div th:replace="admin/common::menu"></div>
+</head>
+<body>
+<div id="app">
+    <div class="main-wrapper">
+        <div class="navbar-bg"></div>
+        <!--导航栏-->
+        <div th:replace="admin/common::headermenu"></div>
+        <!--侧边栏-->
+        <div th:replace="admin/common::leftmenu(6)"></div>
+    </div>
+    <div class="main-content">
+        <section class="section">
+            <h1 class="section-header">
+                <div>用户设置</div>
+            </h1>
+        </section>
+        <div class="ui container">
+
+            <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+                <i class="close icon"></i>
+                <div class="header">提示：</div>
+                <p th:text="${message}">操作成功！</p>
+            </div>
+
+            <div class="ui container segment">
+                <div class="m-container">
+                    <form class="ui form" method="post" th:action="@{/admin/editUser}">
+
+                        <input type="hidden" name="id" th:value="${session.user.id}">
+                        <h2 class="ui centered aligned header m-padded-t-mini-b">个人资料</h2>
+                        <div class="field">
+                            <label class="m-padded-tb-tiny">昵称</label>
+                            <input placeholder="这里修改你的昵称" name="nickname" type="text" th:value="${session.user.nickname}">
+                        </div>
+
+                        <div class="field">
+                            <label class="m-padded-tb-tiny">头像地址</label>
+                            <input type="text" name="avatar" placeholder="此用户的个人头像地址，请用http://开头" th:value="${session.user.avatar}">
+                            <p class="m-padded-tb-tiny" style="color:darkslateblue;">此用户的个人头像地址，请用http://开头</p>
+                        </div>
+
+                        <div class="field">
+                            <label class="m-padded-tb-tiny">邮箱</label>
+                            <input type="email" name="email" th:value="${session.user.email}">
+                        </div>
+
+                        <div class="field">
+                            <label class="m-padded-tb-tiny">密码</label>
+                            <input type="password" name="password" id="pwd">
+                            <p class="m-padded-tb-tiny" style="color:darkslateblue;">密码格式：5~12位由字母、数字或下划线组成。无需修改密码此项为空即可</p>
+                        </div>
+
+                        <div class="field">
+                            <label class="m-padded-tb-tiny">确认密码</label>
+                            <input type="password" id="confirmPassword">
+                        </div>
+
+                        <span id="error" style="color: red"></span>
+
+                        <button id="submitBtn" class="ui fluid primary m-margin-t-big-b-large submit button">更新档案</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div th:replace="admin/common::srciptmenu"></div>
+<script type="text/javascript">
+    $(function () {
+        $("#submitBtn").click(function () {
+            var password=$("#pwd").val();
+            var confirmPassword=$("#confirmPassword").val();
+            //正则表达式
+            var pwdPatt=/^\w{5,12}$/;
+
+            if (!$.isEmptyObject(password)){
+                if (!pwdPatt.test(password)){
+                    $("#error").text("密码不合法");
+                    return false;
+                }
+            }
+            if (password!=confirmPassword){
+                $("#error").text("确认密码与密码不一致");
+                return false;
+            }
+        })
+
+        //消息提示关闭初始化
+        $('.message .close').on('click',function () {
+            $(this).closest('.message').transition('fade');
+        });
+    })
+</script>
+</body>
+</html>

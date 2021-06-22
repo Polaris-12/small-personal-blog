@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>新增分类</title>
+    <div th:replace="admin/common::menu"></div>
+</head>
+<body>
+<div id="app">
+    <div class="main-wrapper">
+        <div class="navbar-bg"></div>
+        <!--导航栏-->
+        <div th:replace="admin/common::headermenu"></div>
+        <!--侧边栏-->
+        <div th:replace="admin/common::leftmenu(3)"></div>
+    </div>
+    <div class="main-content">
+        <section class="section">
+            <h1 class="section-header">
+                <div>新增分类</div>
+            </h1>
+        </section>
+        <div class="m-container">
+            <form th:action="@{/admin/addClassify}" method="post" class="ui form">
+                <div style="height: 100px">
+                    <div class="ui error message" ></div>
+                </div>
+
+                <div class="field">
+                    <div class="ui left labeled input">
+                        <label class="ui teal basic label">名称</label>
+                        <input id="typename" type="text" name="name" placeholder="分类名称" th:value="${name}">
+                    </div>
+
+                </div>
+                <span th:text="${msg}" style="color: red" ></span>
+                <div class="ui right aligned container">
+                    <button type="button" class="ui button" onclick="window.history.go(-1)">返回</button>
+                    <button type="submit" class="ui teal submit button" >增加分类</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div th:replace="admin/common::srciptmenu"></div>
+
+<script type="text/javascript">
+    $(function () {
+        $(".ui.dropdown").dropdown({
+            on : 'hover'
+        })
+
+        $(".ui.form").form({
+            fields : {
+                title : {
+                    identifier : 'name',
+                    rules: [{
+                        type : 'empty',
+                        prompt : '标题：请输入分类名称'
+                    }]
+                }
+            }
+        });
+    })
+</script>
+</body>
+</html>

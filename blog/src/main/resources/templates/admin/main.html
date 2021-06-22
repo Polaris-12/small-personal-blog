@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" name="viewport">
+  <title>后台管理-Blog</title>
+
+  <div th:replace="admin/common::menu"></div>
+  <link rel="stylesheet" th:href="@{/modules/summernote/summernote-lite.css}">
+  <link rel="stylesheet" th:href="@{/modules/flag-icon-css/css/flag-icon.min.css}">
+
+</head>
+
+<body>
+  <div id="app">
+    <div class="main-wrapper">
+      <div class="navbar-bg"></div>
+      <!--导航栏-->
+      <div th:replace="admin/common::headermenu"></div>
+      <!--侧边栏-->
+      <div th:replace="admin/common::leftmenu(1)"></div>
+
+      <div class="main-content">
+      <section class="section">
+        <h1 class="section-header">
+          <div>总览</div>
+        </h1>
+        <div class="row">
+          <div class="col-lg-3 col-md-6 col-12">
+            <div class="card card-sm-3">
+              <div class="card-icon bg-primary">
+                <i class="ion ion-person"></i>
+              </div>
+              <div class="card-wrap">
+                <div class="card-header">
+                  <h4>管理员</h4>
+                </div>
+                <div class="card-body">
+                  [[${userCount}]]
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-12">
+            <div class="card card-sm-3">
+              <div class="card-icon bg-danger">
+                <i class="ion ion-ios-paper-outline"></i>
+              </div>
+              <div class="card-wrap">
+                <div class="card-header">
+                  <h4>文章</h4>
+                </div>
+                <div class="card-body">
+                  [[${blogCount}]]
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-12">
+            <div class="card card-sm-3">
+              <div class="card-icon bg-warning">
+                <i class="ion ion-paper-airplane"></i>
+              </div>
+              <div class="card-wrap">
+                <div class="card-header">
+                  <h4>分类</h4>
+                </div>
+                <div class="card-body">
+                  [[${typeCount}]]
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-12">
+            <div class="card card-sm-3">
+              <div class="card-icon bg-success">
+                <i class="ion ion-record"></i>
+              </div>
+              <div class="card-wrap">
+                <div class="card-header">
+                  <h4>评论</h4>
+                </div>
+                <div class="card-body">
+                  [[${commentCount}]]
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </div>
+      <footer class="main-footer">
+        <div class="footer-right"></div>
+      </footer>
+    </div>
+  </div>
+
+  <div th:replace="admin/common::srciptmenu"></div>
+  <script th:src="@{/modules/chart.min.js}"></script>
+  <script th:src="@{/modules/summernote/summernote-lite.js}"></script>
+</body>
+</html>

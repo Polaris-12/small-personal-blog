@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhiqian.mapper.BlogMapper">
+    <select id="listBlog" parameterType="com.zhiqian.vo.SearchBlog" resultMap="blogMap">
+        SELECT b.id bid,title,b.content bcontent,firstPicture,views,appreciation,commentabled,recommened,published,b.createTime bcreateTime,updateTime,t.id tid,t.name tname,u.id uid,u.nickname uname
+        FROM blog b,TYPE t,USER u
+        <where>
+            b.typeId=t.id AND b.userId=u.id
+            <if test="searchBlog.title!=null and searchBlog.title!=''">and b.title=#{searchBlog.title}</if>
+            <if test="searchBlog.typeId!=null and searchBlog.typeId!=''">and b.typeId=#{searchBlog.typeId}</if>
+            <if test="searchBlog.recommened!=null and searchBlog.recommened!=''">and b.recommened=#{searchBlog.recommened}</if>
+        </where>
+    </select>
+
+    <insert id="saveBlog" parameterType="blog">
+        insert into blog(userId,typeId,title,content,firstpicture,views,appreciation,commentabled,recommened,published,createTime,updateTime)
+        values(#{blog.user.id},#{blog.type.id},#{blog.title},#{blog.content},#{blog.firstPicture},#{blog.views},#{blog.appreciation},#{blog.commentabled},#{blog.recommened},#{blog.published},#{blog.createTime},#{blog.updateTime})
+    </insert>
+    
+    <resultMap id="blogMap" type="blog">
+        <result property="id" column="bid"/>
+        <result property="title" column="title"/>
+        <result property="content" column="bcontent"/>
+        <result property="firstPicture" column="firstPicture"/>
+        <result property="views" column="views"/>
+        <result property="appreciation" column="appreciation"/>
+        <result property="commentabled" column="commentabled"/>
+        <result property="recommened" column="recommened"/>
+        <result property="published" column="published"/>
+        <result property="createTime" column="bcreateTime"/>
+        <result property="updateTime" column="updateTime"/>
+        <association property="type" javaType="type">
+            <result property="id" column="tid"/>
+            <result property="name" column="tname"/>
+        </association>
+        <association property="user" javaType="user">
+            <result property="id" column="uid"/>
+            <result property="nickname" column="uname"/>
+            <result property="avatar" column="uavatar"/>
+        </association>
+    </resultMap>
+    <select id="getComments" resultType="comment">
+        select * from comment where id=#{replyId}
+    </select>
+
+    <select id="getBlogById" resultMap="oneBlog">
+        SELECT b.id bid,title,b.content bcontent,firstPicture,views,appreciation,commentabled,recommened,published,b.createTime bcreateTime,updateTime,t.id tid,t.name tname,u.id uid,u.nickname uname,u.avatar uavatar
+        FROM blog b,TYPE t,user u
+        where b.id=#{id} and b.typeId=t.id and b.userId=u.id
+    </select>
+    <resultMap id="oneBlog" type="blog">
+        <result property="id" column="bid"/>
+        <result property="title" column="title"/>
+        <result property="content" column="bcontent"/>
+        <result property="firstPicture" column="firstPicture"/>
+        <result property="views" column="views"/>
+        <result property="appreciation" column="appreciation"/>
+        <result property="commentabled" column="commentabled"/>
+        <result property="recommened" column="recommened"/>
+        <result property="published" column="published"/>
+        <result property="createTime" column="bcreateTime"/>
+        <result property="updateTime" column="updateTime"/>
+        <association property="type" javaType="type">
+            <result property="id" column="tid"/>
+            <result property="name" column="tname"/>
+        </association>
+        <association property="user" javaType="user">
+            <result property="id" column="uid"/>
+            <result property="nickname" column="uname"/>
+            <result property="avatar" column="uavatar"/>
+        </association>
+    </resultMap>
+
+    <update id="updateBlog" parameterType="blog">
+        update blog
+        <set>
+            <if test="blog.firstPicture!=null and blog.firstPicture!=''">firstPicture=#{blog.firstPicture},</if>
+            typeId=#{blog.type.id},title=#{blog.title},content=#{blog.content},appreciation=#{blog.appreciation},commentabled=#{blog.commentabled},recommened=#{blog.recommened},published=#{blog.published},updateTime=#{blog.updateTime}
+        </set>
+        where id=#{blog.id}
+    </update>
+
+    <select id="listIssueBlog" resultMap="blogMap">
+        SELECT b.id bid,title,b.content bcontent,views,appreciation,commentabled,recommened,published,updateTime,b.createTime bcreateTime,t.id tid,t.name tname,u.id uid,u.nickname uname,u.avatar uavatar
+        FROM blog b,TYPE t,USER u
+        where b.typeId=t.id AND b.userId=u.id and published=true
+    </select>
+
+    <select id="listRecommendBlog" resultType="com.zhiqian.vo.RecommendBlog">
+        select id,title from blog
+        where recommened=true and published=true
+        order by createTime desc
+        limit 5
+    </select>
+
+    <select id="query" parameterType="string" resultMap="blogMap">
+        SELECT b.id bid,title,b.content bcontent,views,appreciation,commentabled,recommened,published,updateTime,b.createTime bcreateTime,t.id tid,t.name tname,u.id uid,u.nickname uname,u.avatar uavatar
+        FROM blog b,TYPE t,USER u
+        where b.typeId=t.id AND b.userId=u.id and published=true and (title like #{query} or content like #{query})
+    </select>
+
+    <select id="queryBlogByTypeId" resultMap="blogMap">
+        SELECT b.id bid,title,b.content bcontent,views,b.createTime bcreateTime,t.id tid,t.name tname,u.id uid,u.nickname uname,u.avatar uavatar
+        FROM blog b,TYPE t,USER u
+        where b.typeId=t.id AND b.userId=u.id and published=true and typeId=#{id}
+    </select>
+
+    <select id="listBlogByYear" resultMap="blogMap" parameterType="string">
+        SELECT b.id bid,title,b.createTime bcreateTime,t.id tid,t.name tname,u.id uid,u.nickname uname,u.avatar uavatar
+        FROM blog b,TYPE t,USER u
+        where b.typeId=t.id AND b.userId=u.id and published=true and date_format(b.createTime,'%Y')=#{year}
+        order by b.createTime desc
+    </select>
+</mapper>

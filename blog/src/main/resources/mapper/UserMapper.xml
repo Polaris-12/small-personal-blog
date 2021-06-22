@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiqian.mapper.UserMapper">
+    <update id="update" parameterType="user">
+        update user
+        <set>
+            <if test="user.nickname!=null">nickname=#{user.nickname},</if>
+            <if test="user.password!=null and user.password!=''">password=#{user.password},</if>
+            <if test="user.email!=null">email=#{user.email},</if>
+            <if test="user.avatar!=null">avatar=#{user.avatar},</if>
+        </set>
+        where id=#{user.id}
+    </update>
+
+    <select id="getUser" resultType="user">
+        select * from user;
+    </select>
+</mapper>

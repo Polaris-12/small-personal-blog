@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>文章归档-千's Blog</title>
+    <div th:replace="common-2::menu"></div>
+
+    <link rel="stylesheet" th:href="@{/lib/tocbot/tocbot.css}">
+</head>
+<body class="m-body">
+    <!--头部导航-->
+    <div th:replace="common-2::headermenu(3)"></div>
+
+    <div id="waypoint" class="m-container m-padded-tb-big animate__animated animate__jackInTheBox">
+        <div class="ui container">
+            <!--header-->
+            <div class="ui top attached padded segment">
+                <div class="ui middle aligned two column grid">
+                    <div class="column">
+                        <h3 class="ui teal header">归档</h3>
+                    </div>
+                    <div class="right aligned column">
+                        共 <h2 class="ui orange header m-inline-block m-text-thin" th:text="${count}"></h2> 篇博客
+                    </div>
+                </div>
+            </div>
+
+            <div class="js-toc-content">
+                <div th:each="map:${maps}">
+                    <h2 id="year" class="ui center aligned header m-padded-t-large-b-small" th:text="${map.key}">2021</h2>
+                    <div class="ui fluid vertical menu">
+                        <a th:href="@{/blog(id=${blog.id})}" target="_blank" class="item" th:each="blog:${map.value}">
+                            <span>
+                                <i class="teal circle icon"></i> [[${blog.title}]]
+                                <div class="ui teal basic left pointing label m-padded-tb-tiny m-margin-tb-tiny" th:text="${#dates.format(blog.createTime,'MMMdd')}">5月01</div>
+                            </span>
+                            <div class="ui orange basic left pointing label m-padded-tb-small m-margin-tb-tiny" th:text="${blog.type.name}">认知升级</div>
+                        </a>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!--右下角小图标-->
+    <div id="toolbar" class="ui vertical icon buttons m-fixed m-right-bottom" style="display: none">
+        <button type="button" class="ui toc teal button">目录</button>
+        <button id="toTop" class="ui icon teal button"><i class="chevron up icon"></i> </button>
+    </div>
+
+    <div class="ui toc-container flowing popup transition hidden" style="width: 250px !important;">
+        <ol class="js-toc">
+
+        </ol>
+    </div>
+
+    <div style="height: 200px"></div>
+    <!--底部footer-->
+    <div th:replace="common-2::footermenu"></div>
+    <!--script-->
+    <div th:replace="common-2::scriptmenu"></div>
+
+    <!--目录生成js-->
+    <script th:src="@{/lib/tocbot/tocbot.min.js}"></script>
+    <!--滚动侦测js-->
+    <script th:src="@{/lib/waypoints/jquery.waypoints.js}"></script>
+    <!--平滑滚动-->
+    <script src="https://cdn.jsdelivr.net/npm/jquery.scrollto@2.1.3/jquery.scrollTo.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#btn").click(function () {
+                $(".m-item").toggleClass('m-mobile-hide');
+            })
+
+            tocbot.init({
+                // Where to render the table of contents.
+                tocSelector: '.js-toc',
+                // Where to grab the headings to build the table of contents.
+                contentSelector: '.js-toc-content',
+                // Which headings to grab inside of the contentSelector element.
+                headingSelector: 'h1, h2, h3',
+                // For headings inside relative or absolute positioned containers within content.
+                hasInnerContainers: true,
+            });
+
+            $(".toc.button").popup({
+                popup : $(".toc-container.popup"),
+                on : 'click',
+                position : 'left center'
+            })
+
+        })
+
+
+
+        $('#toTop').click(function () {
+            $(window).scrollTo(0,500);
+        })
+
+
+        var waypoint = new Waypoint({
+            element: document.getElementById('waypoint'),
+            handler: function(direction) {
+                if (direction=='down'){
+                    $('#toolbar').show(500);
+                }else {
+                    $('#toolbar').hide(500);
+                }
+                console.log('Scrolled to waypoint!'+direction)
+            }
+        })
+    </script>
+</body>
+</html>

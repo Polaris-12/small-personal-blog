@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiqian.mapper.TypeMapper">
+    <select id="listType" resultType="type">
+        SELECT t.`id`,t.`name`,COUNT(b.`typeId`) AS `count`
+        FROM `type` t LEFT JOIN blog b ON t.`id` = b.`typeId`
+        GROUP BY t.id
+        order by `count` desc
+    </select>
+</mapper>

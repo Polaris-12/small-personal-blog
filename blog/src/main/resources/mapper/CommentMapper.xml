@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiqian.mapper.CommentMapper">
+    <insert id="saveComment" parameterType="comment">
+        insert into comment(blogId,nickname,email,content,avatar,createTime,parentId,admin)
+        values(#{comment.blogId},#{comment.nickname},#{comment.email},#{comment.content},#{comment.avatar},#{comment.createTime},#{comment.parentId},#{comment.admin})
+    </insert>
+    
+    <select id="getCommentsByBlogIdAndParentCommentNull" resultMap="listComment">
+        select * from comment where blogId=#{blogId} and parentId is null;
+    </select>
+
+    <resultMap id="listComment" type="comment">
+        <result property="id" column="id"/>
+        <result property="blogId" column="blogId"/>
+        <result property="nickname" column="nickname"/>
+        <result property="email" column="email"/>
+        <result property="content" column="content"/>
+        <result property="avatar" column="avatar"/>
+        <result property="createTime" column="createTime"/>
+        <result property="admin" column="admin"/>
+        <association property="parentComment" column="parentId" javaType="comment" select="getParentComment"/>
+        <collection property="replyComments" column="id" ofType="comment" select="getReplyComments"/>
+    </resultMap>
+
+    <select id="getParentComment" resultMap="listComment">
+        select * from comment where id=#{parentId}
+    </select>
+
+    <select id="getReplyComments" resultMap="listComment">
+        select * from comment where parentId=#{id}
+    </select>
+
+</mapper>

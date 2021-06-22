@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>评论管理</title>
+    <div th:replace="admin/common::menu"></div>
+</head>
+<body>
+<div id="app">
+    <div class="main-wrapper">
+        <div class="navbar-bg"></div>
+        <!--导航栏-->
+        <div th:replace="admin/common::headermenu"></div>
+        <!--侧边栏-->
+        <div th:replace="admin/common::leftmenu(4)"></div>
+    </div>
+    <div class="main-content">
+        <section class="section">
+            <h1 class="section-header">
+                <div>评论管理</div>
+            </h1>
+        </section>
+        <div>
+
+        </div>
+    </div>
+</div>
+<div th:replace="admin/common::srciptmenu"></div>
+</body>
+</html>

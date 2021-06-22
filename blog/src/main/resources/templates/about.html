@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>关于我-千's Blog</title>
+    <div th:replace="common-2::menu"></div>
+</head>
+<body class="m-body">
+    <!--头部导航-->
+    <div th:replace="common-2::headermenu(4)"></div>
+    <!--中间内容-->
+    <div class="container m-padded-tb-big m-margin-tb-large animate__animated animate__jackInTheBox">
+        <div class="ui container">
+            <div class="ui stackable grid">
+                <div class="eleven wide column">
+                    <div class="ui stackable segment">
+                        <img th:src="@{/img/me.jpg}" alt="" class="ui rounded image m-img">
+                    </div>
+                </div>
+                <div class="five wide column">
+                    <div class="ui top attached segment">
+                        <div class="ui center aligned header">关于我</div>
+                    </div>
+                    <div class="ui attached segment">
+                        <p class="m-text">志千，一个在校初级程序员。</p>
+                        <p class="m-text">爱生活、爱编程、爱游戏。</p>
+                    </div>
+                    <div class="ui attached segment">
+                        <div class="ui orange basic left pointing label">编程</div>
+                        <div class="ui orange basic left pointing label">学习</div>
+                        <div class="ui orange basic left pointing label">游戏</div>
+                    </div>
+                    <div class="ui attached segment">
+                        <div class="ui teal basic left pointing label m-margin-tb-tiny">Java</div>
+                        <div class="ui teal basic left pointing label m-margin-tb-tiny">SSM</div>
+                        <div class="ui teal basic left pointing label m-margin-tb-tiny">MySQL</div>
+                        <div class="ui teal basic left pointing label m-margin-tb-tiny">SpringBoot</div>
+                    </div>
+                    <div class="ui bottom attached segment">
+                        <a class="ui teal circular icon button" href="https://github.com/admin0820"><i class="github icon"></i> </a>
+                        <a class="ui green wechat circular icon button"><i class="weixin icon"></i> </a>
+                        <a class="ui blue qq circular icon button" data-content="1270768450" data-position="bottom center"><i class="qq icon"></i> </a>
+                    </div>
+                    <div class="ui weichat-qr flowing popup transition hidden">
+                        <img th:src="@{/img/weixin.png}" class="ui rounded image" style="width: 120px;height: 120px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="height: 200px"></div>
+
+    <!--底部footer-->
+    <div th:replace="common-2::footermenu"></div>
+    <!--script-->
+    <div th:replace="common-2::scriptmenu"></div>
+    <script type="text/javascript">
+        $(function () {
+            $("#btn").click(function () {
+                $(".m-item").toggleClass('m-mobile-hide');
+            })
+
+            $(".qq").popup()
+
+            $(".wechat").popup({
+                popup : $(".weichat-qr"),
+                on : 'hover',
+                position : 'bottom center'
+            })
+        })
+    </script>
+</body>
+</html>
