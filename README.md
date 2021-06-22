@@ -5,27 +5,18 @@
 
 
 #### 软件架构
-软件架构说明
+前端：Bootstarp、Semantic UI
+模板引擎：Thymeleaf
+后端：SpringBoot+Mybatis
 
 
 #### 安装教程
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  下载Demo，执行建库建表的sql文件blog.sql
+2.  配置相关的spingboot配置文件即可启动
 
-#### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
 
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
 
 
 #### 特技
